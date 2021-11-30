@@ -12,39 +12,41 @@ export default function Chars() {
   const handleShow = () => setShow(true);
   const navigate = useNavigate();
   const [show, setShow] = useState(false);
-  const [currentPageUrl, setCurrentPageUrl] = useState(
-    `https://rickandmortyapi.com/api/character/${id}`
-  );
-  const [currentEpisodesUrl, setCurrentEpisodesUrl] = useState(
-    `https://rickandmortyapi.com/api/episode/`
-  );
   const [planet, setPlanet] = useState("");
   const [location, setLocation] = useState("");
   const [episode, setEpisode] = useState([]);
   const [episodes, setEpisodes] = useState([]);
   const [character, setCharacter] = useState([]);
 
+  /*
+  Pendiente por terminar
   useEffect(() => {
-    const url = currentPageUrl;
-    fetch(url)
-      .then((res) => res.json())
-      .then((data) => {
-        setCharacter(data);
-        setPlanet(data.origin);
-        setLocation(data.location);
-        setEpisode(data.episode);
-      });
-  }, [currentPageUrl]);
-  useEffect(() => {
-    const urlEp = currentEpisodesUrl;
-    fetch(urlEp)
-      .then((res) => res.json())
-      .then((data) => {
-        setEpisodes(data.results);
-      });
-  }, []);
+    const loadCharacter = async () => {
+      const res = await fetch(
+        `https://rickandmortyapi.com/api/character/${id}`
+      );
+      const data = await res.json();
+      setCharacter(data);
+      setPlanet(data.origin);
+      setLocation(data.location);
+      setEpisodes(data.episode);
+    };
+    loadCharacter();
+  }, []);*/
 
-  // console.log(episodes[0].name);
+  useEffect(() => {
+    const loadEpisodeForCharacter = async () => {
+      for (let i = 0; i < episodes.length; i++) {
+        let url = "";
+        url = episodes[i];
+        console.log(url);
+        const res = await fetch(url);
+        const data = await res.json();
+        console.log(data.name);
+      }
+    };
+    loadEpisodeForCharacter();
+  }, []);
 
   function goHome(event) {
     event.preventDefault();
@@ -78,7 +80,7 @@ export default function Chars() {
                   </li>
                   <li className="list-group-item">Origin: {planet.name}</li>
                   <li className="list-group-item">
-                    Acutal Location: {location.name}
+                    Actual Location: {location.name}
                   </li>
                   <li className="list-group-item">
                     <Button
@@ -87,7 +89,7 @@ export default function Chars() {
                       className="me-2 position-relative"
                     >
                       <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                        {episode.length}
+                        {episodes.length}
                         <span class="visually-hidden">unread messages</span>
                       </span>
                       Episode List
@@ -102,9 +104,9 @@ export default function Chars() {
                       </Offcanvas.Header>
                       <Offcanvas.Body>
                         <ul class="list-group">
-                          {episode.map((ep, i) => (
+                          {episodes.map((ep, i) => (
                             // (<li class="list-group-item">{ep.url}</li>)
-                            <li class="list-group-item">{ep}</li>
+                            <li class="list-group-item">{episode}</li>
                           ))}
                         </ul>
                       </Offcanvas.Body>
