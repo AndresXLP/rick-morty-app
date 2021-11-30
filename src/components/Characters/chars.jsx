@@ -20,6 +20,7 @@ export default function Chars() {
 
   /*
   Pendiente por terminar
+  */
   useEffect(() => {
     const loadCharacter = async () => {
       const res = await fetch(
@@ -32,18 +33,21 @@ export default function Chars() {
       setEpisodes(data.episode);
     };
     loadCharacter();
-  }, []);*/
+  }, []);
 
   useEffect(() => {
     const loadEpisodeForCharacter = async () => {
+      let epi = [];
       for (let i = 0; i < episodes.length; i++) {
         let url = "";
         url = episodes[i];
-        console.log(url);
+        // console.log(url);
         const res = await fetch(url);
         const data = await res.json();
-        console.log(data.name);
+        epi.push(data.name);
+        setEpisode(epi);
       }
+      console.log(episode);
     };
     loadEpisodeForCharacter();
   }, []);
@@ -106,7 +110,7 @@ export default function Chars() {
                         <ul class="list-group">
                           {episodes.map((ep, i) => (
                             // (<li class="list-group-item">{ep.url}</li>)
-                            <li class="list-group-item">{episode}</li>
+                            <li class="list-group-item">{episode[i]}</li>
                           ))}
                         </ul>
                       </Offcanvas.Body>
