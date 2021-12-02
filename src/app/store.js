@@ -1,3 +1,11 @@
+import { configureStore } from "@reduxjs/toolkit";
+import counterReducer from "../features/counter/counterSlices";
+
+export const store = configureStore({
+  reducer: { counter: counterReducer },
+});
+
+/*
 import { createStore } from "redux";
 
 const initialState = { counter: 0, show: true };
@@ -30,3 +38,4 @@ const counterReducer = (state = initialState, action) => {
   return state;
 };
 export const store = createStore(counterReducer);
+*/
