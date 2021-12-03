@@ -5,26 +5,40 @@ import {
   increment,
   reset,
   selectCount,
+  viewShow,
   toggle,
 } from "./counterSlices";
 
 export const Counter = () => {
   const count = useSelector(selectCount);
+  const show = useSelector(viewShow);
   const dispatch = useDispatch();
 
   return (
     <div className="boxing">
       <h1>Redux Counter</h1>
-      <div>{count}</div>
+      <div>{show && count}</div>
       <div>
-        <button onClick={() => dispatch(increment())}>Increment</button>
-        <button onClick={() => dispatch(decrement())}>Decrement</button>
+        <button
+          data-testid="incrementButton"
+          onClick={() => dispatch(increment())}
+        >
+          Increment
+        </button>
+        <button
+          data-testid="decrementButton"
+          onClick={() => dispatch(decrement())}
+        >
+          Decrement
+        </button>
       </div>
       <div>
         <button onClick={() => dispatch(increment(5))}>Increment x5</button>
         <button onClick={() => dispatch(decrement(5))}>Decrement x5</button>
       </div>
-      <button onClick={() => dispatch(reset())}>Reset Counter</button>
+      <button data-testid="resetButton" onClick={() => dispatch(reset())}>
+        Reset Counter
+      </button>
       <button onClick={() => dispatch(addAsyncAmount())}>Add Async</button>
       <button onClick={() => dispatch(toggle())}>Toogle Counter</button>
     </div>
