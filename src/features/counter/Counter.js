@@ -1,5 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
-import { decrement, increment, reset, selectCount } from "./counterSlices";
+import { addAsyncAmount } from "./counterActions";
+import {
+  decrement,
+  increment,
+  reset,
+  selectCount,
+  toggle,
+} from "./counterSlices";
 
 export const Counter = () => {
   const count = useSelector(selectCount);
@@ -18,7 +25,8 @@ export const Counter = () => {
         <button onClick={() => dispatch(decrement(5))}>Decrement x5</button>
       </div>
       <button onClick={() => dispatch(reset())}>Reset Counter</button>
-      {/* <button onClick={toggleCounterHandler}>Toogle Counter</button> */}
+      <button onClick={() => dispatch(addAsyncAmount())}>Add Async</button>
+      <button onClick={() => dispatch(toggle())}>Toogle Counter</button>
     </div>
   );
 };

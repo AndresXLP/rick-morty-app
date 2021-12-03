@@ -18,13 +18,17 @@ export const counterSlice = createSlice({
       state.value = 0;
     },
     toggle: (state) => {
-      return !state.show;
+      state.show = !state.show;
+    },
+    incrementByAmount: (state) => {
+      state.value += 1;
     },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { increment, decrement, reset, toggle } = counterSlice.actions;
+export const { increment, decrement, reset, toggle, incrementByAmount } =
+  counterSlice.actions;
 export const selectCount = (state) => state.counter.value;
 export const selectShow = (state) => console.log(state.counter.show);
 export const selectShow2 = (state) => state.counter.show;
