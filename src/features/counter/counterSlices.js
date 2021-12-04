@@ -30,6 +30,5 @@ export const counterSlice = createSlice({
 export const { increment, decrement, reset, toggle, incrementByAmount } =
   counterSlice.actions;
 export const selectCount = (state) => state.counter.value;
-export const selectShow = (state) => console.log(state.counter.show);
-export const selectShow2 = (state) => state.counter.show;
+export const selectShow = (state) => state.counter.show;
 export default counterSlice.reducer;
