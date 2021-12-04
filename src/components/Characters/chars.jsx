@@ -8,6 +8,7 @@ import Offcanvas from "react-bootstrap/Offcanvas";
 
 export default function Chars() {
   const { id } = useParams();
+  const characterId = `https://rickandmortyapi.com/api/character/${id}`;
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const navigate = useNavigate();
@@ -23,9 +24,7 @@ export default function Chars() {
   */
   useEffect(() => {
     const loadCharacter = async () => {
-      const res = await fetch(
-        `https://rickandmortyapi.com/api/character/${id}`
-      );
+      const res = await fetch(characterId);
       const data = await res.json();
       setCharacter(data);
       setPlanet(data.origin);
@@ -33,25 +32,30 @@ export default function Chars() {
       setEpisodes(data.episode);
     };
     loadCharacter();
-  }, []);
+  }, [characterId]);
 
   useEffect(() => {
     const loadEpisodeForCharacter = async () => {
       let epi = [];
-      for (let i = 0; i < episodes.length; i++) {
-        let url = "";
-        url = episodes[i];
-        // console.log(url);
-        const res = await fetch(url);
+      for (let i = 1; i < 4; i++) {
+        const res = await fetch(
+          `https://rickandmortyapi.com/api/episode?page=${i}`
+        );
         const data = await res.json();
-        epi.push(data.name);
+        const charsByEpisode = data.results;
+        charsByEpisode.map((charsByEpis, i) => {
+          return charsByEpis.characters.map((charInEpisode) => {
+            if (charInEpisode === characterId) {
+              epi.push(charsByEpis.name);
+            }
+            return epi;
+          });
+        });
         setEpisode(epi);
       }
-      console.log(episode);
     };
     loadEpisodeForCharacter();
-  }, []);
-
+  }, [characterId]);
   function goHome(event) {
     event.preventDefault();
     navigate("/");
@@ -73,28 +77,28 @@ export default function Chars() {
               <h5 className="card-title">{character.name}</h5>
               <ul className="list-group list-group-flush text-start">
                 <li className="list-group-item">
-                  <li className="list-group-item">
+                  <div className="list-group-item">
                     Status: {character.status}
-                  </li>
-                  <li className="list-group-item">
+                  </div>
+                  <div className="list-group-item">
                     Species: {character.species}
-                  </li>
-                  <li className="list-group-item">
+                  </div>
+                  <div className="list-group-item">
                     Gender: {character.gender}
-                  </li>
-                  <li className="list-group-item">Origin: {planet.name}</li>
-                  <li className="list-group-item">
+                  </div>
+                  <div className="list-group-item">Origin: {planet.name}</div>
+                  <div className="list-group-item">
                     Actual Location: {location.name}
-                  </li>
-                  <li className="list-group-item">
+                  </div>
+                  <div className="list-group-item">
                     <Button
                       variant="primary"
                       onClick={handleShow}
                       className="me-2 position-relative"
                     >
-                      <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                      <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                         {episodes.length}
-                        <span class="visually-hidden">unread messages</span>
+                        <span className="visually-hidden">unread messages</span>
                       </span>
                       Episode List
                     </Button>
@@ -107,15 +111,16 @@ export default function Chars() {
                         <Offcanvas.Title>Episodes</Offcanvas.Title>
                       </Offcanvas.Header>
                       <Offcanvas.Body>
-                        <ul class="list-group">
+                        <ul className="list-group">
                           {episodes.map((ep, i) => (
-                            // (<li class="list-group-item">{ep.url}</li>)
-                            <li class="list-group-item">{episode[i]}</li>
+                            <div key={i} className="list-group-item">
+                              {episode[i]}
+                            </div>
                           ))}
                         </ul>
                       </Offcanvas.Body>
                     </Offcanvas>
-                  </li>
+                  </div>
                 </li>
               </ul>
               <div>
