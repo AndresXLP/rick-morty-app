@@ -3,7 +3,7 @@ import { fetchCount } from "./counterApi";
 
 export const addAsyncAmount = (value) => {
   return async (dispatch) => {
-    const amount = await fetchCount(value);
+    await fetchCount(value);
     dispatch(incrementAsync());
   };
 };

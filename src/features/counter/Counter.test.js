@@ -35,7 +35,7 @@ describe("Counter", () => {
     const numberIncrement = screen.getByText("1");
     expect(numberIncrement).toBeInTheDocument();
   });
-  test("Reset 'Number to 0' ", () => {
+  test("Increment 'Number for 5' and Reset 'Number to 0' ", () => {
     // Arrange
     render(
       <Provider store={store}>
@@ -44,6 +44,9 @@ describe("Counter", () => {
     );
 
     // Act
+    const buttonElementx5 = screen.getByTestId("incrementx5");
+    userEvent.click(buttonElementx5);
+
     const buttonElement = screen.getByTestId("resetButton");
     userEvent.click(buttonElement);
 
